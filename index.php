@@ -15,14 +15,8 @@ include_once 'classes/test.php';
         <form action="classes/test.php" method="POST" enctype="multipart/form-data">
             <input type="file" name="file_upload[]" id="file_upload" multiple>
             <input type="submit" name="process_file" value="Process Test">
-        </form>
-        <br>
-        <br>
-        <br>
-        <form action="classes/php-media-bundle.php" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file_upload[]" id="file_upload" multiple>
-            <input type="submit" name="process_file" value="Process">
-        </form>
+
+    <!-- YES I KNOW CENTER IS DEPRECATED -->
     </center>
 </body>
 </html>

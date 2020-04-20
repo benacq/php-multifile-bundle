@@ -301,23 +301,23 @@ class MultifileBundle extends ProcessMultimedia
 
 
 
-//TEST OBJECT
-if (isset($_POST['process_file'])) {
-    $my_custom_errors = array(
-    "UPLOAD_MAX_SIZE_USER" => "A new value passed",
-    "ERR_MOVE_TO_DIR"=>"another change",
-    "ON_WHITELIST_BREACH"=>"White list error",
-    "UPLOAD_NUMBER_LIMIT_EXCEEDED"=>"upload exceeded. DEV TEST"
-    );
+// //TEST OBJECT
+// if (isset($_POST['process_file'])) {
+//     $my_custom_errors = array(
+//     "UPLOAD_MAX_SIZE_USER" => "A new value passed",
+//     "ERR_MOVE_TO_DIR"=>"another change",
+//     "ON_WHITELIST_BREACH"=>"White list error",
+//     "UPLOAD_NUMBER_LIMIT_EXCEEDED"=>"upload exceeded. DEV TEST"
+//     );
     
-    MultiFileConfig::config_errors($my_custom_errors);
-    array_push(MultiFileConfig::$white_list, "html");
+//     MultiFileConfig::config_errors($my_custom_errors);
+//     array_push(MultiFileConfig::$white_list, "html");
 
 
-    $files = $_FILES['file_upload'];
-    $media_bundle = new MultifileBundle($files, 5);
-    $pretty = $media_bundle->pretty();
-    $validate_pretty = $media_bundle->validate($pretty, 1000000);
-    echo $validate_pretty."<br>";
-    // $media_bundle->save_to_dir($validate_pretty, "../uploaded");
-}
+//     $files = $_FILES['file_upload'];
+//     $media_bundle = new MultifileBundle($files, 5);
+//     $pretty = $media_bundle->pretty();
+//     $validate_pretty = $media_bundle->validate($pretty, 1000000);
+//     echo $validate_pretty."<br>";
+//     // $media_bundle->save_to_dir($validate_pretty, "../uploaded");
+// }
