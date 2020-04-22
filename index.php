@@ -1,5 +1,5 @@
 <?php
-include_once 'classes/test.php';
+    // include 'classes/test.php';
 ?>
 
 
@@ -13,9 +13,9 @@ include_once 'classes/test.php';
 <body>
     <center>
         <form action="classes/test.php" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file_upload[]" id="file_upload" multiple>
+            <input type="file" name="file_upload" id="file_upload">
             <input type="submit" name="process_file" value="Process Test">
-
+    </form>
     <!-- YES I KNOW CENTER IS DEPRECATED -->
     </center>
 </body>

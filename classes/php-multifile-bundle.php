@@ -1,11 +1,25 @@
 <?php
 
+/**
+ * PHP MULTIFILE BUNDLE
+ * @desc This is a multipurpose file upload handler for php, it handles both single and multiple files, ensures they are well validated before it is returned to the user for further operations
+ * @author Benjamin Acquaah benacq44@gmail.com 
+ * @twitter https://twitter.com/benacq44
+ * @linkedIn https://www.linkedin.com/in/benjamin-acquaah-9294aa14b/
+ * 
+ */
+
+
+
 abstract class ProcessMultimedia
 {
+    //These are the methods that does the magic
     abstract public function pretty();
+    abstract public function upload_single();
     abstract public function validate($pretty, $max_upload_size);
     abstract public function save_to_dir($pretty, $path);
 }
+
 
 
 class MultiFileConfig
@@ -25,10 +39,10 @@ class MultiFileConfig
         return array_keys($arr) !== range(0, count($arr) - 1);
     }
 
-
-
+     /**
+     * @static default errors that can be overriden
+     */
     //CONFIGURABLE ERRORS
-  
     public static $UPLOAD_MAX_SIZE_USER = "Your file is too large";
     public static $UPLOAD_MAX_FORM= "EXCEEDED FORM MAX UPLOAD SIZE LIMIT";
     public static $FILE_CORRUPT = "Invalid, file may be corrupted";
@@ -42,65 +56,72 @@ class MultiFileConfig
     public static $UPLOAD_NUMBER_LIMIT_EXCEEDED = "exceeded the allowed file number upload";
     
 
-
+     /**
+     * @static system errors[errors/warnings/notices]
+     */
     //SYSTEM ERRORS/WARNINGS/NOTICES
     public static $CONFIG_ERROR_BREACH = "Method expected an array, ";
     public static $CONFIG_ERROR_ASSOC_BREACH = "Unexpected key passed to, refer to the docs for valid keys";
     public static $EXT_DOUBLE_FILTER = "Cannot pass double extension filter";
+    public static $LIMIT_SINGLE_FILE = "Unexpected argument, unable to set MAX UPLOADS to a single file";
     public static $UPLOAD_MAX_INI = "EXCEEDED MAX UPLOAD LIMIT IN php.ini, INCREASE MAX UPLOAD SIZE";
     public static $UPLOAD_TMP_EMPTY = "TMP IS EMPTY";//THROW WARNING
     public static $ARGUMENT_COUNT_ERR = "Method expected an argument, none found";
+    public static $UPLOAD_MULTIPLE_NULL_LIMIT = "Method expects MAX UPLOAD NUMBER, none found";
 
 
-
-
-
+    /**
+     * @static For error configurations
+     * @desc It overrides the default errors by the class and replaces them with user specified error
+     * @param array multidimesional  
+     * 
+     */
     public static function config_errors($errors)
     {
-        if (is_array($errors)) {
-            if (self::is_assoc($errors)) {
+        if (is_array(@$errors)) {
+            if (self::is_assoc(@$errors)) {
                 try {
                     switch (true) {
                     case array_key_exists('UPLOAD_MAX_SIZE_USER', $errors):
                         self::$UPLOAD_MAX_SIZE_USER = $errors['UPLOAD_MAX_SIZE_USER'];
                         
-                        // no break
+                        
                     case array_key_exists('UPLOAD_MAX_FORM', $errors):
                         array_key_exists('UPLOAD_MAX_FORM', $errors) ? self::$UPLOAD_MAX_FORM = $errors['UPLOAD_MAX_FORM']: false;
                         
-                        // no break
+                        
                     case array_key_exists('FILE_CORRUPT', $errors):
                         array_key_exists('FILE_CORRUPT', $errors) ? self::$FILE_CORRUPT = $errors['FILE_CORRUPT']:false;
                         
-                        // no break
+                        
                     case array_key_exists('ON_UPLOAD_EMPTY', $errors):
                         array_key_exists('ON_UPLOAD_EMPTY', $errors) ? self::$ON_UPLOAD_EMPTY = $errors['ON_UPLOAD_EMPTY']:false;
                         
-                        // no break
+                        
                     case array_key_exists('PARTIAL_UPLOAD', $errors):
                         array_key_exists('PARTIAL_UPLOAD', $errors) ? self::$PARTIAL_UPLOAD = $errors['PARTIAL_UPLOAD']:false;
                         
-                        // no break
+                        
                     case array_key_exists('UPLOAD_ERR_UNKNOWN', $errors):
                         array_key_exists('UPLOAD_ERR_UNKNOWN', $errors) ? self::$UPLOAD_ERR_UNKNOWN = $errors['UPLOAD_ERR_UNKNOWN']: false;
                         
-                        // no break
+                        
                     case array_key_exists('UPLOAD_ABORT_ON_EXT', $errors):
                         array_key_exists('UPLOAD_ABORT_ON_EXT', $errors) ? self::$UPLOAD_ABORT_ON_EXT = $errors['UPLOAD_ABORT_ON_EXT']: false;
                         
-                        // no break
+                        
                     case array_key_exists('ON_BLACKLIST_BREACH', $errors):
                         array_key_exists('UPLOAD_ABORT_ON_EXT', $errors) ? self::$ON_BLACKLIST_BREACH = $errors['ON_BLACKLIST_BREACH']:false;
                         
-                        // no break
+                        
                     case array_key_exists('ON_WHITELIST_BREACH', $errors):
                         array_key_exists('ON_WHITELIST_BREACH', $errors) ? self::$ON_WHITELIST_BREACH = $errors['ON_WHITELIST_BREACH']:false;
                         
-                        // no break
+                        
                     case array_key_exists('ERR_MOVE_TO_DIR', $errors):
                         array_key_exists('ERR_MOVE_TO_DIR', $errors) ? self::$ERR_MOVE_TO_DIR = $errors['ERR_MOVE_TO_DIR']:false;
 
-                        // no break
+                        
                     case array_key_exists('UPLOAD_NUMBER_LIMIT_EXCEEDED', $errors):
                         array_key_exists('UPLOAD_NUMBER_LIMIT_EXCEEDED', $errors) ? self::$UPLOAD_NUMBER_LIMIT_EXCEEDED = $errors['UPLOAD_NUMBER_LIMIT_EXCEEDED']:false;
           
@@ -120,23 +141,52 @@ class MultiFileConfig
 
 
 
-
-
-
 class MultifileBundle extends ProcessMultimedia
 {
     private $files_limit = 0;
     private $files = array();
+    private $file_single;
     private $SYSTEM_MAX_UPLOAD_SIZE;
-
-    public function __construct($files, $files_limit, $custom_error = false)
+    
+    /**
+     * __construct
+     * 
+     * @desc takes the file uploaded file and maximum number of uploads into the class' constructor
+     * also checks if the file is single or multiple and act accordingly.
+     * @param  array $files
+     * @param  int $files_limit
+     * @return void
+     */
+    public function __construct($files, $files_limit = null)
     {
         $this->SYSTEM_MAX_UPLOAD_SIZE = $this->parse_size(ini_get('upload_max_filesize'));
-        $this->files_limit = $files_limit;
-        $this->files = $files;
+
+        switch (!is_array($files['name'])) {
+            case true:
+                if (!is_null($files_limit)) {
+                    trigger_error(MultiFileConfig::$LIMIT_SINGLE_FILE, E_USER_WARNING);
+                    exit();
+                }
+                $this->file_single = $files;
+                break;
+            default:
+                if (is_null($files_limit)) {
+                    trigger_error(MultiFileConfig::$UPLOAD_MULTIPLE_NULL_LIMIT, E_USER_WARNING);
+                    exit();
+                }
+                $this->files_limit = $files_limit;
+                $this->files = $files;
+                    // echo "multiple";
+                break;
+        }
     }
 
-    // Prettify data
+    
+    /**
+     * prettify_filess
+     * @param  array $files
+     * @return array pretty[file] well formatted $_FILES superglobal array
+     */
     private function prettify_files($files)
     {
         $pretty = array();
@@ -154,10 +204,18 @@ class MultifileBundle extends ProcessMultimedia
         return $pretty;
     }
 
+        
+    /**
+     * @source https://stackoverflow.com/questions/13076480/php-get-actual-maximum-upload-size 
+     * parse_size
+     * @desc parses the php.ini max from short byte size into a standard file size(B,KB,MB, GB)
+     * @param  short-byte MAX_UPLOAD SIZE
+     * @return size
+     */
     private function parse_size($size)
     {
-        $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
-        $size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
+        $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Removes the non-unit characters from the size.
+        $size = preg_replace('/[^0-9\.]/', '', $size); // Removes the non-numeric characters from the size.
         if ($unit) {
             // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
             return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
@@ -166,7 +224,12 @@ class MultifileBundle extends ProcessMultimedia
         }
     }
 
-
+    
+    /**
+     * pretty
+     * @desc a public method that returns the prettified file array to the user[developer]
+     * @return array pretty
+     */
     public function pretty()
     {
         try {
@@ -175,13 +238,38 @@ class MultifileBundle extends ProcessMultimedia
             trigger_error(MultiFileConfig::$ARGUMENT_COUNT_ERR, E_USER_ERROR);
         }
     }
+
     
+    /**
+     * upload_single
+     *
+     * @param  int $max_upload_size
+     * @return array validated_pretty
+     */
+    public function upload_single($max_upload_size = 0)
+    {
+        if ($max_upload_size == 0) {
+            $max_upload_size = $this->SYSTEM_MAX_UPLOAD_SIZE;
+            return $this->validate(array($this->file_single), $this->SYSTEM_MAX_UPLOAD_SIZE)[0];
+        } else {
+            return $this->validate(array($this->file_single), $max_upload_size)[0];
+        }
+    }
+
+        
+    /**
+     * validate
+     * @desc validates the passed file and returns a validated pretty file array otherwise an error
+     * developers may have to set it to a variable and print_r to see the error in case there is any
+     * 
+     * @param  array $pretty
+     * @param  int $max_upload_size defaults to 0
+     * @return array validated_pretty
+     */
     public function validate($pretty, $max_upload_size = 0)
     {
         $max_upload_size = $max_upload_size == 0 ? $this->SYSTEM_MAX_UPLOAD_SIZE : $max_upload_size;
         $finfo = new finfo(FILEINFO_MIME_TYPE);
-        array_push(MultiFileConfig::$white_list, "html");
-
 
         if (is_array($pretty)) {
             foreach ($pretty as $index=>$data) {
@@ -263,8 +351,21 @@ class MultifileBundle extends ProcessMultimedia
         }
     }
 
-    public function save_to_dir($pretty, $path)
+    
+    /**
+     * save_to_dir
+     *
+     * @param  array $file
+     * @param  string $path
+     * @return path
+     */
+    public function save_to_dir($file, $path)
     {
+        if (!is_array($file)) {
+            trigger_error("Method expects 2 paramenters array[file], string[path], ".gettype($file).", ".gettype($path)." passed", E_USER_WARNING);
+            exit();
+        }
+        $pretty = array_key_exists('name',$file) ? array($file) : $file;
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         $ext = basename($finfo->file($pretty[0]['tmp_name']));
         $clean_path = substr($path, -1) !== '/' ? $path."/" : $path;
@@ -299,25 +400,3 @@ class MultifileBundle extends ProcessMultimedia
     }
 }
 
-
-
-// //TEST OBJECT
-// if (isset($_POST['process_file'])) {
-//     $my_custom_errors = array(
-//     "UPLOAD_MAX_SIZE_USER" => "A new value passed",
-//     "ERR_MOVE_TO_DIR"=>"another change",
-//     "ON_WHITELIST_BREACH"=>"White list error",
-//     "UPLOAD_NUMBER_LIMIT_EXCEEDED"=>"upload exceeded. DEV TEST"
-//     );
-    
-//     MultiFileConfig::config_errors($my_custom_errors);
-//     array_push(MultiFileConfig::$white_list, "html");
-
-
-//     $files = $_FILES['file_upload'];
-//     $media_bundle = new MultifileBundle($files, 5);
-//     $pretty = $media_bundle->pretty();
-//     $validate_pretty = $media_bundle->validate($pretty, 1000000);
-//     echo $validate_pretty."<br>";
-//     // $media_bundle->save_to_dir($validate_pretty, "../uploaded");
-// }

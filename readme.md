@@ -1,11 +1,29 @@
 # OVERVIEW
-I've noticed uploading multiple files with php has been a hustle for most beginners, so i wrote this little class to do the work for you :)
+I don't know how long it took for you to fully understand file uploads and implement it on your own, but this was a big challenge to me especially uploading multiple files, it took quite long for me to grasp the whole thing.
+To save everyone from going through what i went through i have taken time to research on best practices on file validation and file uploads as a whole and written a class to do the magic for you just by calling methods.
+By calling a minimum of 4 methods you can upload as many files as possible.
 
-__PHP MULTIFILE BUNDLE__ is fully customizable and provides the following services for you
+__PHP MULTIFILE BUNDLE__ PHP Multifile Bundle is a php class that handles file uploads,validation and other cool stuff when uploading files, it provides you with the following services.
 
-- __Prettify__ the file from the standard php $_FILE superglobal array to a more readable and grouped form
+- __Prettify__ The standard php $_FILES superglobal array is quite messy and unorganized, by calling the 'pretty' method in this class returns a more organized array that is easy to understand.
 
-- __Handles validation__ it handles all your file validations in a more recommended way that you won't have to worry about security issues, developers may also return the pretty array by calling the _pretty_ method and implement their own custom validation which suits them.
+- __File validator__ The Multifile Bundle class comes with a validator that takes the pretty method as an argument and pass it through series of checks to make sure the file(s) can be trusted before it returns the file back
 
-- __Zip Generater__ Developers also have an option to create a zip file for each user which contains a particular users file data
+- __Blacklist and Whitelist Extensions__ The class makes sure all the standard file processing procedures are followed, so it provides a way for you to add blacklist or whitelist extensions and the validator acts accordingly.
+
+- __Override Custom Errors__ The class comes with default errors in case something goes wrong, but the user has the chance to overide it anytime by pass their custom errors throug a static configuration class.
+
+## INSTALLATION
+    Clone this repository in the steps below
+    - Open your terminal in your project directory
+    - type `git clone git@github.com:benacq/php-multifile-bundle.git`
+## USAGE
+    include the class file into your project 
+
+    The class takes two arguments, one required for single files and both required for multiple files
+    ```PHP
+        $multifile = new MultifileBundle(array file)
+    ```
+    
+
 
