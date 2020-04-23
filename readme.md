@@ -16,6 +16,7 @@ __PHP MULTIFILE BUNDLE__ PHP Multifile Bundle is a php class that handles file u
 ## INSTALLATION
   Clone this repository by typing the line below
   Open your terminal in your project directory and type
+  
   ```git clone git@github.com:benacq/php-multifile-bundle.git```
 ## USAGE
     include the class file into your project 
