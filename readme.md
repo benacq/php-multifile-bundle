@@ -20,11 +20,25 @@ __PHP MULTIFILE BUNDLE__ PHP Multifile Bundle is a php class that handles file u
 ## USAGE
     include the class file into your project 
 
-    The class takes two arguments into it's constructor, the file array and maximum number of uploads, both argumets are required when you pass a multiple file, only the file argument is required when you pass a single file 
+    The class takes two arguments into it's constructor, the file array and maximum number of uploads, both argumets are required when you pass a multiple file, but when you pass a single file only the file argument is required.
+
+### UPLOADING MULTIPLE FILES
+```    
+<?
+        $multifile = new MultifileBundle(array files [, int max_upload]);
+        $multifile->pretty();
+?>
+```
+    
+
+### UPLOADING SINGLE FILES
+    using the same constructor above we call the upload_single method of the class to handle single file uploads.
+    it takes an integer, the maximum file size allowed
     <?
-        $multifile = new MultifileBundle(array files [, int max_upload])
+        $validated_single = $multifile->upload_single(int max_file_size);
     ?>
     
+    d
     
 
 
