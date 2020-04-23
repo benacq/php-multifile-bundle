@@ -11,7 +11,7 @@ __PHP MULTIFILE BUNDLE__ PHP Multifile Bundle is a php class that handles file u
 
 - __Blacklist and Whitelist Extensions__ The class makes sure all the standard file processing procedures are followed, so it provides a way for you to add blacklist or whitelist extensions and the validator acts accordingly.
 
-- __Override Custom Errors__ The class comes with default errors in case something goes wrong, but the user has the chance to overide it anytime by pass their custom errors throug a static configuration class.
+- __Override Custom Errors__ The class comes with default errors messages, but the user has the chance to overide it anytime by passing their custom errors through a static configuration method.
 
 ## INSTALLATION
   Clone this repository by typing the line below
