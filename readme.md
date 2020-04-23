@@ -24,7 +24,7 @@ __PHP MULTIFILE BUNDLE__ PHP Multifile Bundle is a php class that handles file u
     ```php
     <?
         $multifile = new MultifileBundle(array files [, int max_upload])
-    ?>
+    
     ```
     
 
