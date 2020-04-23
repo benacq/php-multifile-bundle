@@ -14,9 +14,9 @@ __PHP MULTIFILE BUNDLE__ PHP Multifile Bundle is a php class that handles file u
 - __Override Custom Errors__ The class comes with default errors in case something goes wrong, but the user has the chance to overide it anytime by pass their custom errors throug a static configuration class.
 
 ## INSTALLATION
-    Clone this repository in the steps below
-    - Open your terminal in your project directory
-    - type ```git clone git@github.com:benacq/php-multifile-bundle.git```
+  Clone this repository in the steps below
+  - Open your terminal in your project directory
+  -type ```git clone git@github.com:benacq/php-multifile-bundle.git```
 ## USAGE
     include the class file into your project 
 
@@ -25,18 +25,19 @@ __PHP MULTIFILE BUNDLE__ PHP Multifile Bundle is a php class that handles file u
 ### UPLOADING MULTIPLE FILES
 ```php    
 <?
-        $multifile = new MultifileBundle(array files [, int max_upload]);
-        $multifile->pretty();
-
+    $multifile = new MultifileBundle(array files [, int max_upload]);
+    $multifile->pretty();
 ```
+The pretty method returns an organized file that more easier to work with
     
 
 ### UPLOADING SINGLE FILES
     using the same constructor above we call the upload_single method of the class to handle single file uploads.
     it takes an integer, the maximum file size allowed
-    <?
-        $validated_single = $multifile->upload_single(int max_file_size);
-    ?>
+ ```php
+<?
+    $validated_single = $multifile->upload_single(int max_file_size);
+```
     
     d
     
