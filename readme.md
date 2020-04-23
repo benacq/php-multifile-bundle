@@ -69,6 +69,16 @@ With these four lines of code you will have your files uploaded safely into the 
 ## Setting Custom Errors
     The configuration class comes with a predefined error messages for all errors that may occur, these messages are configured by a static method called config_errors which takes an associative array as an argument. This array has a fixed key which should match the one in the class, the value is where your custom error goes.
     below are all the error keys that can be overriden with a custom error.
+```php
+<?
+  $my_custom_errors = array(
+    "UPLOAD_NUMBER_LIMIT_EXCEEDED"=>"custom upload exceeded message",
+    "FILE_CORRUPT"=>"custom file corrupt message",
+    "PARTIAL_UPLOAD"=>"custom partial upload message",
+    "UPLOAD_NUMBER_LIMIT_EXCEEDED"=>"custom upload exceeded message"
+  );
+  MultiFileConfig::config_errors($my_custom_errors);
+```
 
 | Error Keys                    | Meaning                                                                           |
 | ----------------------------- |:---------------------------------------------------------------------------------:|
@@ -84,21 +94,8 @@ With these four lines of code you will have your files uploaded safely into the 
 | ERR_MOVE_TO_DIR               | When an error occur while moving the file to the specified directory              |
 | UPLOAD_NUMBER_LIMIT_EXCEEDED  | When the user tries to upload more files than is allowed
                                 
-__Example code__                                   
-```php
-<?
-  $my_custom_errors = array(
-    "UPLOAD_NUMBER_LIMIT_EXCEEDED"=>"custom upload exceeded message",
-    "FILE_CORRUPT"=>"custom file corrupt message",
-    "PARTIAL_UPLOAD"=>"custom partial upload message",
-    "UPLOAD_NUMBER_LIMIT_EXCEEDED"=>"custom upload exceeded message"
-  );
-  MultiFileConfig::config_errors($my_custom_errors);
-```
 
-# EXAMPLE UPLOAD
-
-
+# FULL EXAMPLE UPLOAD CODE
 ```php    
 <?
     //ALL CONFIGURATIONS MUST BE DONE BEFORE INSTANTIATING THE CLASS
@@ -120,7 +117,6 @@ __Example code__
 
 ## Contact
     - Twitter [@benacq44](https://twitter.com/benacq44)
-    
     - Email benacq44@gmail.com
     - LinkedIn https://www.linkedin.com/in/benjamin-acquaah-9294aa14b/
 
