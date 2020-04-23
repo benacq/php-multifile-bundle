@@ -94,7 +94,7 @@ below are all the error keys that can be overriden with a custom error.
 | UPLOAD_NUMBER_LIMIT_EXCEEDED  | When the user tries to upload more files than is allowed
                                 
 
-# FULL EXAMPLE UPLOAD CODE
+### FULL EXAMPLE UPLOAD CODE
 ```php    
 <?
     //ALL CONFIGURATIONS MUST BE DONE BEFORE INSTANTIATING THE CLASS
