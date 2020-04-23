@@ -84,8 +84,75 @@ With these four lines of code you will have your files uploaded safely into the 
 | ERR_MOVE_TO_DIR               | When an error occur while moving the file to the specified directory              |
 | UPLOAD_NUMBER_LIMIT_EXCEEDED  | When the user tries to upload more files than is allowed
                                 
-                                      
-                                   
+__Example code__                                   
+```php
+<?
+  $my_custom_errors = array(
+    "UPLOAD_NUMBER_LIMIT_EXCEEDED"=>"custom upload exceeded message",
+    "FILE_CORRUPT"=>"custom file corrupt message",
+    "PARTIAL_UPLOAD"=>"custom partial upload message",
+    "UPLOAD_NUMBER_LIMIT_EXCEEDED"=>"custom upload exceeded message"
+  );
+  MultiFileConfig::config_errors($my_custom_errors);
+```
+
+# EXAMPLE UPLOAD
+
+
+```php    
+<?
+    //ALL CONFIGURATIONS MUST BE DONE BEFORE INSTANTIATING THE CLASS
+    $my_custom_errors = array(
+    "UPLOAD_NUMBER_LIMIT_EXCEEDED"=>"custom upload exceeded message",
+    "FILE_CORRUPT"=>"custom file corrupt message",
+    );
+    MultiFileConfig::config_errors($my_custom_errors);
+
+    //NOTE: Only one of these two can be set, either whitelist or blacklist, never both.
+    array_push(MultiFileConfig::$blacklist, "exe","bin","bat","php");
+
+    $multifile = new MultifileBundle($_FILES['file_name'], 5);
+    $pretty_array = $multifile->pretty();//This returns an array or error
+    $validated_pretty = $multifile->validate($pretty_array, 2000000);//Same with validate, an error or array
+    $multifile->save_to_dir($validated_pretty, "./my_uploads");// This returns the path if successfull otherwise error
+```
+
+
+## Contact
+    - Twitter [@benacq44](https://twitter.com/benacq44)
+    
+    - Email benacq44@gmail.com
+    - LinkedIn https://www.linkedin.com/in/benjamin-acquaah-9294aa14b/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
