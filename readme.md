@@ -65,9 +65,38 @@ With these four lines of code you will have your files uploaded safely into the 
 ### NOTE
     You cannot set both blacklist and whitelist at the same time, if you set a whitelist, automatically all files that do not fall within the whitelist are considered blacklisted.
     Same way if you set a blacklist all other files automatically becomes whitelisted and therefore will be accepted.
-    
 
-    
-    
+## Setting Custom Errors
+    The configuration class comes with a predefined error messages for all errors that may occur, these messages are configured by a static method called config_errors which takes an associative array as an argument. This array has a fixed key which should match the one in the class, the value is where your custom error goes.
+    below are all the error keys that can be overriden with a custom error.
+
+    | Error Keys                    | Meaning                                                                           |
+    | ----------------------------- |:---------------------------------------------------------------------------------:|
+    | UPLOAD_MAX_SIZE_USER          | When the file size exceeds the maximum size limit set by the developer            |
+    | UPLOAD_MAX_FORM               | When uploaded file size exceeds the specified in your html form                   |
+    | FILE_CORRUPT                  | This normally happens when the error status code is null or is an array           |
+    | ON_UPLOAD_EMPTY               | When the user tries to submit the form without choosing a file                    |
+    | PARTIAL_UPLOAD                | When the selected file fails to upload fully to the server                        |
+    | UPLOAD_ERR_UNKNOWN            | All validations are done but something went wrong , its quite unlikely to happen  |
+    | UPLOAD_ABORT_ON_EXT           | This error occurs when the upload terminate because of the file extension         |
+    | ON_BLACKLIST_BREACH           | This occurs when a blacklisted file is detected                                   |
+    | ON_WHITELIST_BREACH           | When an unknown file is detected, files that does not exist in the whitelist      |
+    | ERR_MOVE_TO_DIR               | When an error occur while moving the file to the specified directory              |
+    | UPLOAD_NUMBER_LIMIT_EXCEEDED  | When the user tries to upload more files than is allowed
+                                   
+                                      
+                                   
+
+
+
+
+
+
+
+
+
+
+
+
 
 
