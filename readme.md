@@ -28,14 +28,14 @@ __PHP MULTIFILE BUNDLE__ PHP Multifile Bundle is a php class that handles file u
 <?
     $multifile = new MultifileBundle(array $files [, int $max_upload]);
     $pretty_array = $multifile->pretty();
-    $validated_pretty = $multifile->validate(array $pretty_array, int $max_upload_size);
+    $validated_pretty = $multifile->validate(array $pretty_array, [,int $max_upload_size]);
     $multifile->save_to_dir(array $validated_pretty, string $path);
 ```
-The __pretty__ method returns an error if something goes wrong, otherwise a more organized file array that is more easier to work with, users can choose to implement their own validation with the returned array or use the validator that comes with the class.
+The __pretty__ method returns an error if something goes wrong, otherwise an array that is more organized and easier to work with, users can choose to implement their own validation with the returned array or use the validator that comes with the class.
 
-The __validate__ method also returns a pretty, but this time it has undergone validation and can be trusted unlike the pretty_array which is not validated.
+The __validate__ method also returns a an array(pretty), but this time it has undergone validation and can be trusted unlike the pretty_array which is not validated.
 
-The final method __save_to_dir__ takes two required arguments, the validated_pretty and the preferred directory path and moves the file into the specified directory passed through the argument.
+The __save_to_dir__ method takes two required parameters, an array[validated_pretty] and a string[path].
 
 With these four lines of code you will have your files uploaded safely into the specified directory.
     
