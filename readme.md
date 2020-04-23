@@ -116,9 +116,9 @@ below are all the error keys that can be overriden with a custom error.
 
 
 ## Contact
-    - Twitter [@benacq44](https://twitter.com/benacq44)
-    - Email benacq44@gmail.com
-    - LinkedIn https://www.linkedin.com/in/benjamin-acquaah-9294aa14b/
+- Twitter [@benacq44](https://twitter.com/benacq44)
+- Email benacq44@gmail.com
+- LinkedIn https://www.linkedin.com/in/benjamin-acquaah-9294aa14b/
 
 
 
