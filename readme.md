@@ -33,9 +33,10 @@ __PHP MULTIFILE BUNDLE__ PHP Multifile Bundle is a php class that handles file u
 ```
 The __pretty__ method returns an error if something goes wrong, otherwise an array that is more organized and easier to work with, users can choose to implement their own validation with the returned array or use the validator that comes with the class.
 
-The __validate__ method also returns a an array(pretty), but this time it has undergone validation and can be trusted unlike the pretty_array which is not validated.
+The __validate__ method also returns a an array[pretty], but this time it has undergone validation and can be trusted unlike the pretty_array which is not validated.It returns an error if there is any.
 
 The __save_to_dir__ method takes two required parameters, an array[validated_pretty] and a string[path].
+it returns the path if the file was moved successfully otherwise an error.
 
 With these four lines of code you will have your files uploaded safely into the specified directory.
     
@@ -55,11 +56,9 @@ With these four lines of code you will have your files uploaded safely into the 
 *All configurations must be done before creating an instance of the MultifileBundle class*
 ## Blacklisting and Whitelisting extentions
     The configuration class has two static arrays which handle extension restrictions, all you have to do is add extensions to the array.
-
 ```php
 <?
     array_push(MultiFileConfig::$blacklist, "png","jpg","html","jpeg");//By adding these line, any file with any of these extensions will be seen as malicious and therefore will be rejected.
-
     array_push(MultiFileConfig::$whitelist, "mp4","mp3");//By adding these line, only files with these extensions will be accepted.
 ```
 ### NOTE
