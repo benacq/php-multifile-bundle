@@ -68,7 +68,6 @@ With these four lines of code you will have your files uploaded safely into the 
 
 ## Setting Custom Errors
     The configuration class comes with a predefined error messages for all errors that may occur, these messages are configured by a static method called config_errors which takes an associative array as an argument. This array has a fixed key which should match the one in the class, the value is where your custom error goes.
-    below are all the error keys that can be overriden with a custom error.
 ```php
 <?
   $my_custom_errors = array(
@@ -79,6 +78,7 @@ With these four lines of code you will have your files uploaded safely into the 
   );
   MultiFileConfig::config_errors($my_custom_errors);
 ```
+below are all the error keys that can be overriden with a custom error.
 
 | Error Keys                    | Meaning                                                                           |
 | ----------------------------- |:---------------------------------------------------------------------------------:|
