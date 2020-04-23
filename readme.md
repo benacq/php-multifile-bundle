@@ -42,13 +42,31 @@ With these four lines of code you will have your files uploaded safely into the 
 
 ### UPLOADING SINGLE FILES
     using the same constructor above we call the upload_single method of the class to handle single file uploads.
-    it takes an integer, the maximum file size allowed
+    it takes one required argument, the maximum file size allowed
  ```php
 <?
     $validated_single = $multifile->upload_single(int $max_upload_size);
     $multifile->save_to_dir(array $validated_single, string $path);
 ```
+ ## Configurations
+    All the configurations are handled by a class named MultifileConfig.
+    With this class you can override error message and set extension restrictions.
+### NOTE
+*All configurations must be done before creating an instance of the MultifileBundle class*
+## Blacklisting and Whitelisting extentions
+    The configuration class has two static arrays which handle extension restrictions, all you have to do is add extensions to the array.
+
+```php
+<?
+    array_push(MultiFileConfig::$blacklist, "png","jpg","html","jpeg");//By adding these line, any file with any of these extensions will be seen as malicious and therefore will be rejected.
+
+    array_push(MultiFileConfig::$whitelist, "mp4","mp3");//By adding these line, only files with these extensions will be accepted.
+```
+### NOTE
+    You cannot set both blacklist and whitelist at the same time, if you set a whitelist, automatically all files that do not fall within the whitelist are considered blacklisted.
+    Same way if you set a blacklist all other files automatically becomes whitelisted and therefore will be accepted.
     
+
     
     
 

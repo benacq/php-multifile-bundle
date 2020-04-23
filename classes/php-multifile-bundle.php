@@ -25,7 +25,7 @@ abstract class ProcessMultimedia
 class MultiFileConfig
 {
     //IF WHITELIST IS SET, ALL OTHER EXTENTIONS WILL BE CONSIDERED BLACKLIST
-    public static $white_list = array();
+    public static $whitelist = array();
     //LIKEWISE IF BLACKLIST IS SET, ALL OTHER EXTENTIONS WILL BE CONSIDERED WHITELIST
     public static $blacklist = array();
     //THIS WILL CONTAIN ALL THE ERROR RETURNED FROM THE CLASS
@@ -320,11 +320,11 @@ class MultifileBundle extends ProcessMultimedia
 
                     $finfo = new finfo(FILEINFO_MIME_TYPE);
 
-                    if (!empty(MultiFileConfig::$white_list) && !empty(MultiFileConfig::$blacklist)) {
+                    if (!empty(MultiFileConfig::$whitelist) && !empty(MultiFileConfig::$blacklist)) {
                         trigger_error(MultiFileConfig::$EXT_DOUBLE_FILTER, E_USER_WARNING);
                         exit();
-                    } elseif (!empty(MultiFileConfig::$white_list) || !empty(MultiFileConfig::$blacklist)) {
-                        switch (empty(MultiFileConfig::$white_list)) {
+                    } elseif (!empty(MultiFileConfig::$whitelist) || !empty(MultiFileConfig::$blacklist)) {
+                        switch (empty(MultiFileConfig::$whitelist)) {
                         case true:
                             //BLACKLIST CHECK
                             if (false !== $ext = array_search(basename($finfo->file($pretty[$index]['tmp_name'])), MultiFileConfig::$blacklist, true)) {
@@ -333,7 +333,7 @@ class MultifileBundle extends ProcessMultimedia
                             }
                             break;
                         case false:
-                            if (false === $ext = array_search(basename($finfo->file($pretty[$index]['tmp_name'])), MultiFileConfig::$white_list, true)) {
+                            if (false === $ext = array_search(basename($finfo->file($pretty[$index]['tmp_name'])), MultiFileConfig::$whitelist, true)) {
                                 array_push(MultiFileConfig::$errors, MultiFileConfig::$ON_WHITELIST_BREACH);
                                 return MultiFileConfig::$ON_WHITELIST_BREACH;
                             }
