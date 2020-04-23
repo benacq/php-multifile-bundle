@@ -16,13 +16,15 @@ __PHP MULTIFILE BUNDLE__ PHP Multifile Bundle is a php class that handles file u
 ## INSTALLATION
     Clone this repository in the steps below
     - Open your terminal in your project directory
-    - type `git clone git@github.com:benacq/php-multifile-bundle.git`
+    - type ```git clone git@github.com:benacq/php-multifile-bundle.git```
 ## USAGE
     include the class file into your project 
 
-    The class takes two arguments, one required for single files and both required for multiple files
-    ```PHP
-        $multifile = new MultifileBundle(array file)
+    The class takes two arguments into it's constructor, the file array and maximum number of uploads, both argumets are required when you pass a multiple file, only the file argument is required when you pass a single file 
+    ```php
+    <?
+        $multifile = new MultifileBundle(array files [, int max_upload])
+    ?>
     ```
     
 
