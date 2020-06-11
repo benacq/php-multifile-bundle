@@ -42,12 +42,14 @@ With these four lines of code you will have your files uploaded safely into the 
     
 
 ### UPLOADING SINGLE FILES
-    using the same constructor above we call the upload_single method of the class to handle single file uploads.
+    To upload a single file, its as simple as passing the file into the constructor of the class,
+    then you call the upload_single method of the class to handle single file uploads.
     it takes one required argument, the maximum file size allowed
  ```php
 <?
-    $validated_single = $multifile->upload_single(int $max_upload_size);
-    $multifile->save_to_dir(array $validated_single, string $path);
+    $single = new MultifileBundle($file);
+    $validated_single = $single->upload_single(int $max_upload_size);
+    $single->save_to_dir(array $validated_single, string $path);
 ```
  ## Configurations
     All the configurations are handled by a class named MultifileConfig.

@@ -1,5 +1,5 @@
 <?php
-
+namespace benacq\PHPMultifileBundle;
 /**
  * PHP MULTIFILE BUNDLE
  * @desc This is a multipurpose file upload handler for php, it handles both single and multiple files, ensures they are well validated before it is returned to the user for further operations
