@@ -380,22 +380,23 @@ class MultifileBundle extends ProcessMultimedia
 
         foreach ($pretty as $index => $data) {
             if (!is_string($path) || is_null($path)) {
-                trigger_error("Method expects 2 paramenters array[file], string[path], " . gettype($pretty) . ", " . gettype($path) . " passed", E_USER_WARNING);
+                trigger_error("Method expects 2 paramenters array[file], string[path] ::" . gettype($pretty) . ", " . gettype($path) . " passed", E_USER_WARNING);
             } else {
                 if (is_string($path)) {
+                    $genPath = sprintf(
+                        $clean_path . '%s.%s',
+                        sha1_file($pretty[$index]['tmp_name']),
+                        $ext
+                    );
                     if (is_dir($path) && file_exists($path)) {
                         if (!move_uploaded_file(
                             $pretty[$index]['tmp_name'],
-                            sprintf(
-                                $clean_path . '%s.%s',
-                                sha1_file($pretty[$index]['tmp_name']),
-                                $ext
-                            )
+                            $genPath
                         )) {
                             array_push(MultiFileConfig::$errors, MultiFileConfig::$ERR_MOVE_TO_DIR);
                             return MultiFileConfig::$ERR_MOVE_TO_DIR;
                         } else {
-                            return $clean_path;
+                            return $genPath;
                         }
                     } else {
                         trigger_error("paramenter $path not a valid directory", E_USER_NOTICE);
