@@ -1,6 +1,4 @@
 # OVERVIEW
-I don't know how long it took for you to fully understand file uploads and implement it on your own, but this was a big challenge to me especially uploading multiple files, it took quite long for me to grasp the whole thing.
-To save everyone from going through what i went through i have taken time to research on best practices on file validation and file uploads as a whole and written a class to do the magic for you just by calling methods.
 By calling a minimum of 4 methods you can upload as many files as possible.
 
 __PHP MULTIFILE BUNDLE__ PHP Multifile Bundle is a php class that handles file uploads,validation and other cool stuff when uploading files, it provides you with the following services.
